@@ -17,9 +17,12 @@ struct DatePickerView: View {
     @State private var showDatePicker = true
     
     var body: some View {
-        VStack {}
+        ComposeView()
             .padding()
-            .sheet(isPresented: $showDatePicker, onDismiss: { onDismiss() }) {
+            .sheet(isPresented: $showDatePicker, onDismiss: {
+                showDatePicker = false
+                onDismiss()
+            }) {
                 VStack {
                     DatePicker(
                         "Select a Date",
@@ -30,11 +33,13 @@ struct DatePickerView: View {
                     HStack(spacing: 20) {
                         Spacer()
                         Button("Cancel") {
+                            showDatePicker = false
                             onDismiss()
                         }
                         Button("OK") {
                             let millis = KotlinLong(value: Int64(selectedDate.timeIntervalSince1970 * 1000))
                             onDateSelect(millis)
+                            showDatePicker = false
                             onDismiss()
                         }
                         .padding()

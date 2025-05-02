@@ -16,9 +16,12 @@ struct ProvideTextView: View {
     @State private var showScreen = true
 
     var body: some View {
-        VStack {}
+        ComposeView()
             .padding()
-            .fullScreenCover(isPresented: $showScreen, onDismiss: { onDismiss() }) {
+            .fullScreenCover(isPresented: $showScreen, onDismiss: {
+                showScreen = false
+                onDismiss()
+            }) {
                 VStack(spacing: 40) {
                     
                     TextField("Enter text", text: $text)
@@ -26,6 +29,7 @@ struct ProvideTextView: View {
                         .padding()
 
                     Button("Done") {
+                        showScreen = false
                         onDone(text)
                         onDismiss()
                     }
